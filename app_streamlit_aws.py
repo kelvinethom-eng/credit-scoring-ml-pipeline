@@ -119,7 +119,7 @@ if st.button("🔮 Prediksi Credit Score", type="primary", use_container_width=T
         st.error(f"AWS error: {e.response['Error'].get('Message', str(e))}")
     else:
         label = result["labels"][0]
-        probs = result["probabilities"][0]  # [P(Poor), P(Standard), P(Good)]
+        probs = result["probabilities"][0]
 
         prob_order = os.environ.get("PROB_ORDER", "Good,Poor,Standard").split(",")
         prob_by_class = dict(zip(prob_order, probs))
@@ -137,8 +137,7 @@ if st.button("🔮 Prediksi Credit Score", type="primary", use_container_width=T
 
         st.write("Probabilitas tiap kelas:")
         st.bar_chart({"probability": {
-            "Poor": probs[0], "Standard": probs[1], "Good": probs[2]}})
-
+          c: prob_by_class[c] for c in ["Poor", "Standard", "Good"]}})
 with st.sidebar:
     st.markdown("## ℹ️ Info")
     st.json({"endpoint": ENDPOINT_NAME, "region": REGION})

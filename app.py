@@ -228,8 +228,6 @@ with st.form("credit_form", clear_on_submit=False):
             step=1.0
         )
         
-        # Convert percentage to decimal (0-1 range)
-        credit_util_ratio_decimal = credit_util_ratio
         
         changed_credit_limit = st.number_input(
             "Changed Credit Limit (Perubahan Limit Kredit)",
@@ -304,7 +302,7 @@ if submit_button:
             "Credit_Mix": credit_mix,
             "Delay_from_due_date": delay_due_date,
             "Num_of_Delayed_Payment": num_delayed_payment,
-            "Credit_Utilization_Ratio": credit_util_ratio_decimal,
+            "Credit_Utilization_Ratio": credit_util_ratio,
             "Changed_Credit_Limit": changed_credit_limit,
             "Num_Credit_Inquiries": num_inquiries,
             "Payment_of_Min_Amount": payment_of_min_amount,

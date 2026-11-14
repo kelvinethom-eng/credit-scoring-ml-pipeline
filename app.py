@@ -55,7 +55,7 @@ API_URL = "http://127.0.0.1:8000/predict"
 API_HEALTH_URL = "http://127.0.0.1:8000/health"
 
 # Check API status
-@st.cache_resource
+@st.cache_data(ttl=5)
 def check_api_status():
     try:
         response = requests.get(API_HEALTH_URL, timeout=5)

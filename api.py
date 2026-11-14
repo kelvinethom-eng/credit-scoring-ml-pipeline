@@ -179,16 +179,19 @@ async def root():
     }
 
 
-@app.get("/health", response_model=HealthResponse)
+from fastapi.responses import JSONResponse
+@app.get("/health")
 async def health_check():
-    """Check API health status"""
-    return {
-        "status": "✅ healthy" if MODEL_LOADED else "❌ unhealthy",
-        "model_ready": model is not None,
-        "preprocessor_ready": preprocessor is not None,
-        "api_version": "1.0.0"
-    }
-
+    ready = MODEL_LOADED and model is not None and preprocessor is not None
+    return JSONResponse(
+        status_code=200 if ready else 503,
+        content={
+            "status": "healthy" if ready else "unhealthy",
+            "model_ready": model is not None,
+            "preprocessor_ready": preprocessor is not None,
+            "api_version": "1.0.0",
+        },
+    )
 
 @app.post("/predict", response_model=PredictionResponse)
 def predict_credit_score(data: CreditInput):

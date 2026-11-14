@@ -140,7 +140,7 @@ class CreditInput(BaseModel):
                 "Credit_Mix": "Standard",
                 "Delay_from_due_date": 5,
                 "Num_of_Delayed_Payment": 2,
-                "Credit_Utilization_Ratio": 0.45,
+                "Credit_Utilization_Ratio": 45,
                 "Changed_Credit_Limit": 2000,
                 "Num_Credit_Inquiries": 4,
                 "Payment_of_Min_Amount": "Yes",
@@ -191,7 +191,7 @@ async def health_check():
 
 
 @app.post("/predict", response_model=PredictionResponse)
-async def predict_credit_score(data: CreditInput):
+def predict_credit_score(data: CreditInput):
     # Check if model is loaded
     if model is None or preprocessor is None:
         logger.error("❌ Model atau Preprocessor tidak loaded")

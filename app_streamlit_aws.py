@@ -121,6 +121,13 @@ if st.button("🔮 Prediksi Credit Score", type="primary", use_container_width=T
         label = result["labels"][0]
         probs = result["probabilities"][0]  # [P(Poor), P(Standard), P(Good)]
 
+        prob_order = os.environ.get("PROB_ORDER", "Good,Poor,Standard").split(",")
+        prob_by_class = dict(zip(prob_order, probs))
+        top_class = max(prob_by_class, key=prob_by_class.get)
+        if top_class != label:
+            st.warning(
+                f"Urutan probabilitas kemungkinan salah: label '{label}', tetapi "
+                f"probabilitas tertinggi ada di '{top_class}'. Cek PROB_ORDER.")
         if label == "Good":
             st.success(f"### ✅ {label.upper()} — profil kredit sehat")
         elif label == "Standard":
